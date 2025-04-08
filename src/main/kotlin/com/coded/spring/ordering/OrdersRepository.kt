@@ -5,7 +5,7 @@ import jakarta.persistence.*
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
-@Repository
+@Named
 interface OrderRepository : JpaRepository<Order, Long>
 
 @Entity
@@ -13,20 +13,16 @@ interface OrderRepository : JpaRepository<Order, Long>
 data class Order(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "orderid")
-    val orderID: Long? = null,
+    var orderID: Long? = null,
+    // Thanks to Mohammed Sheshter he figured out we need to use back ticks to resolve the 500 server error caused by JPA getting confused by "users"
+    @Column(name = "`user`")
+    var user: String = "",
 
-    @Column(name = "user")
-    val user: String,
+    var restaurant: String = "",
 
-    @Column(name = "restaurant")
-    val restaurant: String,
-
-    @ElementCollection // Since the specified schema requires a list of items I had to make a seperate table
-//     linked by id to the main table
-    @CollectionTable(name = "order_items", joinColumns = [JoinColumn(name = "orderID")])
-    @Column(name ="item")
-    val items: List<String>
+    // Since the specified schema requires a list of items I had to make a seperate table
+    @CollectionTable(name = "order_items")
+    var items: MutableList<String?> = mutableListOf()
 ){
-    constructor() : this(null,"","", emptyList())
+    constructor() : this(null,"","", mutableListOf())
 }
