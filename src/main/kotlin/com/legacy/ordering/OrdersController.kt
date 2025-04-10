@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class FoodieController(val ordersRepository: OrderRepository) {
+class OrdersController(val ordersRepository: OrderRepository) {
 
     // Exercise 1
     @GetMapping("/welcome")
