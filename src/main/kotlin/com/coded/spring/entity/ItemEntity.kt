@@ -14,7 +14,11 @@ class ItemEntity (
 
     var quantity: Int,
 
-    var price :   BigDecimal)
+    var price :   BigDecimal
+)
+{
+    constructor(): this(null, "", 0, BigDecimal.ZERO )
 
+}
 
 

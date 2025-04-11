@@ -17,5 +17,8 @@ data class OrderEntity(
 
     @OneToMany(mappedBy = "id")
     val items: MutableList<ItemEntity>
-
 )
+
+{
+    constructor() : this(null, UserEntity(), "", mutableListOf())
+}

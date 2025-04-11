@@ -2,8 +2,8 @@ package com.coded.spring.repository
 
 
 import com.coded.spring.entity.UserEntity
-import jakarta.inject.Named
 import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.stereotype.Repository
 
-@Named
+@Repository
 interface UserRepository : JpaRepository<UserEntity, Long>
