@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service
 class UserService (private val userRepository: UserRepository){
 
     fun findAllUsers() = userRepository.findAll()
+
     fun createUser(user: UserEntity) = userRepository.save(user)
 
 

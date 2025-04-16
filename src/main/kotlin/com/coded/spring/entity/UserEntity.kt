@@ -17,7 +17,12 @@ data class UserEntity(
     var name: String,
     @Column(name = "email")
     var email: String,
+
+    val username: String,
+    val password: String
+//ALTER TABLE users ADD username varchar(255) unique
+//ALTER TABLE users ADD password varchar(255)
 )
 {
-    constructor() : this(null,"","")
+    constructor() : this(null,"","", "", "")
 }

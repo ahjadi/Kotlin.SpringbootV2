@@ -8,11 +8,22 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class UserController (private val userService: UserService){
+class UserController(private val userService: UserService) {
+
+    @GetMapping("/hello")
+    fun hello()= """
+        <html>
+            <body>
+                <p style="color: #00008B;">hello yo</p>
+            </body>
+        </html>
+     
+    """.trimIndent()
 
     @PostMapping("/users/create")
     fun newUser(@RequestBody user: UserEntity): UserEntity {
-    return userService.createUser(user)}
+        return userService.createUser(user)
+    }
 
     @GetMapping("/users/v1/list")
     fun listUsers() = userService.findAllUsers()
