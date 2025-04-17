@@ -20,7 +20,7 @@ class UserController(private val userService: UserService) {
      
     """.trimIndent()
 
-    @PostMapping("/users/create")
+    @PostMapping("/public/users/create")
     fun newUser(@RequestBody user: UserEntity): UserEntity {
         return userService.createUser(user)
     }

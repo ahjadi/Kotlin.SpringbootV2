@@ -22,8 +22,9 @@ class SecurityConfig(
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
         http.csrf { it.disable() }
             .authorizeHttpRequests {
-                it.requestMatchers("/public/**").permitAll()
+                it.requestMatchers("/public/**").permitAll().requestMatchers("/orders/v1/**").authenticated()
                     .anyRequest().authenticated()
+
             }
             .formLogin { it.defaultSuccessUrl("/hello", true) }
             .userDetailsService(userDetailsService)

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*
 @RestController
 class OrderController(val orderService: OrderService){
 
-    @PostMapping("/orders/submit")
+    @PostMapping("/orders/v1/submit")
     fun submitOrder(@RequestBody orderRequest: OrderService.OrderRequestDTO) {
         orderService.createOrder(orderRequest)
     }

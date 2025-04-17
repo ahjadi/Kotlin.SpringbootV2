@@ -4,21 +4,17 @@ import jakarta.persistence.*
 import java.math.BigDecimal
 
 @Entity
-@Table(name = "items")
-data class ItemEntity (
+@Table(name = "menu")
+data class MenuEntity(
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null,
 
     var name: String,
+    var price: BigDecimal
+) {
+    constructor() : this(null, "", BigDecimal.ZERO) {
 
-    var quantity: Int,
-
-    var price :   BigDecimal
-)
-{
-    constructor(): this(null, "", 0, BigDecimal.ZERO )
-
+    }
 }
-
-
