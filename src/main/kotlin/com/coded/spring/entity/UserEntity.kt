@@ -23,6 +23,6 @@ data class UserEntity(
 //ALTER TABLE users ADD username varchar(255) unique
 //ALTER TABLE users ADD password varchar(255)
 )
-{
-    constructor() : this(null,"","", "", "")
-}
+//{
+//    constructor() : this(null,"","", "", "")
+//}

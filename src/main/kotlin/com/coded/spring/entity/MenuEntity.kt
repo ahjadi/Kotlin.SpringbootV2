@@ -13,8 +13,9 @@ data class MenuEntity(
 
     var name: String,
     var price: BigDecimal
-) {
-    constructor() : this(null, "", BigDecimal.ZERO) {
-
-    }
-}
+)
+//) {
+//    constructor() : this(null, "", BigDecimal.ZERO) {
+//
+//    }
+//}

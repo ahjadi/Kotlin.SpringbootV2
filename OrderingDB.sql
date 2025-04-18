@@ -3,14 +3,14 @@ create table users (
 	id serial primary key,
 	name varchar(255) not null,
 	email varchar(255) not null unique
-)
+);
 
 create table orders (
 	id serial primary key,
 	user_id bigint not null,
 	restaurant varchar(255) not null,
 	foreign key (user_id) references users(id) on delete cascade
-)
+);
 
 create table items (
 id serial primary key,

@@ -16,9 +16,9 @@ data class ItemEntity (
 
     var price :   BigDecimal
 )
-{
-    constructor(): this(null, "", 0, BigDecimal.ZERO )
-
-}
+//{
+//    constructor(): this(null, "", 0, BigDecimal.ZERO )
+//
+//}
 
 

@@ -19,6 +19,6 @@ data class OrderEntity(
     val items: MutableList<ItemEntity>
 )
 
-{
-    constructor() : this(null, UserEntity(), "", mutableListOf())
-}
+//{
+//    constructor() : this(null, UserEntity(), "", mutableListOf())
+//}
