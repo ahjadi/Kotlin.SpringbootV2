@@ -5,6 +5,7 @@ import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
+import jakarta.persistence.OneToMany
 import jakarta.persistence.Table
 
 @Entity
@@ -13,16 +14,9 @@ data class UserEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null,
-    @Column(name = "name")
-    var name: String,
-    @Column(name = "email")
-    var email: String,
 
+    var name: String,
+    var email: String,
     val username: String,
-    val password: String
-//ALTER TABLE users ADD username varchar(255) unique
-//ALTER TABLE users ADD password varchar(255)
+    val password: String,
 )
-//{
-//    constructor() : this(null,"","", "", "")
-//}

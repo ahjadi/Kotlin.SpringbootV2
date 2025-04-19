@@ -20,10 +20,16 @@ class OrderService (
         val user = userRepository.findById(orderRequest.userId).get()
         val newOrder = OrderEntity(
             user = user, restaurant = orderRequest.restaurant,
-            items = orderRequest.items
+//            items = orderRequest.items
         )
+        val itemsWithOrder = orderRequest.items.map {
+            it.order = newOrder
+            it
+        }
+        newOrder.items.addAll(itemsWithOrder)
+
         orderRepository.save(newOrder)
-        itemRepository.saveAll(orderRequest.items)
+//        itemRepository.saveAll(orderRequest.items)
     }
 
     fun listOrdersByUserID(user_ID: Long) = orderRepository.findAllByUserId(user_ID)

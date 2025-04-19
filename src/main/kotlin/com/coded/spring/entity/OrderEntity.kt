@@ -9,16 +9,7 @@ data class OrderEntity(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null,
 
-    @ManyToOne // this is for fk
-    val user: UserEntity,
-
-    @Column(name = "restaurant")
     var restaurant: String,
 
-    @OneToMany(mappedBy = "id")
-    val items: MutableList<ItemEntity>
+    var userId: Long
 )
-
-//{
-//    constructor() : this(null, UserEntity(), "", mutableListOf())
-//}

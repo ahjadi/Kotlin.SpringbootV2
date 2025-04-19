@@ -118,9 +118,11 @@
 <!--						put those two compiler plugins-->
 						<plugin>jpa</plugin>
 						<plugin>all-open</plugin>
+						<plugin>no-arg</plugin>
 					</compilerPlugins>
 <!--					and these plugin optionos-->
 					<pluginOptions>
+						<option>no-arg:annotation=com.my.Annotation</option>
 						<option>all-open:annotation=jakarta.persistence.Entity</option>
 						<option>all-open:annotation=jakarta.persistence.MappedSuperclass</option>
 						<option>all-open:annotation=jakarta.persistence.Embeddable</option>
@@ -134,6 +136,7 @@
 					</dependency>
 				</dependencies>
 			</plugin>
+
 		</plugins>
 	</build>
 

@@ -11,14 +11,11 @@ data class ItemEntity (
     var id: Long? = null,
 
     var name: String,
-
     var quantity: Int,
+    var price :   BigDecimal,
 
-    var price :   BigDecimal
+    var orderId: Long
+
 )
-//{
-//    constructor(): this(null, "", 0, BigDecimal.ZERO )
-//
-//}
 
 
