@@ -18,4 +18,9 @@ class UserService (private val userRepository: UserRepository){
         require(password.any { it.isDigit() }) { "Password must contain at least one number" }
     }
 
-}
+}data class UserRequest(
+    val name: String,
+    val email: String,
+    val username: String,
+    val password: String
+)
