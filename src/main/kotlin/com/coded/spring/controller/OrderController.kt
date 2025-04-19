@@ -8,8 +8,9 @@ import org.springframework.web.bind.annotation.*
 class OrderController(val orderService: OrderService){
 
     @PostMapping("/orders/v1/submit")
-    fun submitOrder(@RequestBody orderRequest: OrderService.OrderRequestDTO) {
+    fun submitOrder(@RequestBody orderRequest: OrderService.OrderRequestDTO) : OrderService.OrderResponseDTO{
         orderService.createOrder(orderRequest)
+        return OrderService.OrderResponseDTO(orderRequest.restaurant, orderRequest.items)
     }
 
     @GetMapping("/orders/user/orders/{userId}")
