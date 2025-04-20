@@ -18,7 +18,7 @@ class OrderService(
     private var userRepository: UserRepository
 ) {
 
-    fun createOrder(request: OrderRequestDTO) {
+    fun createOrder(request: OrderRequest) {
         val userName = SecurityContextHolder.getContext().authentication.name
         val userId = userRepository.findByUsername(userName)?.id
             ?: throw IllegalArgumentException("User Not Found")
@@ -57,12 +57,12 @@ class OrderService(
         val price: BigDecimal
     )
 
-    data class OrderRequestDTO(
+    data class OrderRequest(
         val restaurant: String,
         val items: MutableList<ItemDTO>
     )
 
-    data class OrderResponseDTO(
+    data class OrderResponse(
         val restaurant: String,
         val items: List<ItemDTO>
     )

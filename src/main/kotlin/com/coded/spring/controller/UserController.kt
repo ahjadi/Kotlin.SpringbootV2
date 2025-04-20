@@ -63,8 +63,6 @@ class UserController(
         } catch (e: IllegalArgumentException) {
             "error: ${e.message}"
         }
-
-
     }
 
 }
