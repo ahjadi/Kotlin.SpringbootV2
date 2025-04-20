@@ -19,17 +19,18 @@ class OrderService(
 ) {
 
     fun createOrder(request: OrderRequestDTO) {
-        val user = userRepository.findById(request.userId)
-            .orElseThrow { IllegalArgumentException("User Not Found") }
+        val userName = SecurityContextHolder.getContext().authentication.name
+        val userId = userRepository.findByUsername(userName)?.id
+            ?: throw IllegalArgumentException("User Not Found")
 
         val tokenUsername = SecurityContextHolder.getContext().authentication.name
-        val requestUsername = userRepository.findById(request.userId).get().username
+        val requestUsername = userRepository.findById(userId).get().username
         if (tokenUsername != requestUsername)
             throw ResponseStatusException(HttpStatus.FORBIDDEN, "Username mismatch")
 
         val order = OrderEntity(
             restaurant = request.restaurant,
-            userId = request.userId
+            userId = userId
         )
         val savedOrder = orderRepository.save(order)
         val items = request.items.map {
@@ -44,7 +45,10 @@ class OrderService(
         itemRepository.saveAll(items)
     }
 
-    fun listOrdersByUserID(user_ID: Long) = orderRepository.findAllByUserId(user_ID)
+    fun listOrdersByUserID(userId: Long) {
+        val user = userRepository.findById(userId).orElseThrow { IllegalArgumentException("User Not Found") }
+        orderRepository.findAllByUserId(userId)
+    }
 
 
     data class ItemDTO(
@@ -54,7 +58,6 @@ class OrderService(
     )
 
     data class OrderRequestDTO(
-        val userId: Long,
         val restaurant: String,
         val items: MutableList<ItemDTO>
     )

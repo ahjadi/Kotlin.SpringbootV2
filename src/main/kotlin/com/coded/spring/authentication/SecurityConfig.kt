@@ -24,7 +24,7 @@ class SecurityConfig(
     private val jwtAuthFilter: JwtAuthenticationFilter,
     private val userDetailsService: UserDetailsService
 ) {
-
+    // For authorization you need to add code in security config, customuserdetails, and jwtservice
     @Bean
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
         http.csrf { it.disable() }

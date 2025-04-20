@@ -8,5 +8,6 @@ import org.springframework.stereotype.Service
 class MenuService(val menuRepository: MenuRepository){
 
     fun addItems(menuEntity: MenuEntity) = menuRepository.save(menuEntity)
+
     fun listMenuItems() = menuRepository.findAll()
 }

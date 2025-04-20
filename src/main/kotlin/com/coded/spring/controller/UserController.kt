@@ -1,6 +1,5 @@
 package com.coded.spring.controller
 
-import com.coded.spring.entity.ProfileEntity
 import com.coded.spring.entity.UserEntity
 import com.coded.spring.service.ProfileRequest
 import com.coded.spring.service.ProfileService
@@ -48,14 +47,24 @@ class UserController(
 
     @PostMapping("/auth/profile/save")
     fun saveProfile(@RequestBody request: ProfileRequest): Any {
+        return try {
+            profileService.save(request)
+            ResponseEntity.ok().body("Profile saved successfully")
+        } catch (e: IllegalArgumentException) {
+            ResponseEntity.badRequest().body("Error while saving profile ${e.message}")
+        }
 
-        val newProfile = ProfileEntity(
-            firstName = request.firstName,
-            lastName = request.lastName, phoneNumber = request.phoneNumber,
-            userId = request.userId
-        )
-        profileService.save(newProfile)
-        return ResponseEntity.ok().body("Success")
+    }
+
+    @GetMapping("/auth/profile/view/")
+    fun viewProfile(): Any {
+        return try {
+            profileService.view()
+        } catch (e: IllegalArgumentException) {
+            "error: ${e.message}"
+        }
+
+
     }
 
 }

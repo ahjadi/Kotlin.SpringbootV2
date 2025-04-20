@@ -16,9 +16,10 @@ class ProfileService(
 ) {
 
 
-    fun save(profile: ProfileEntity) {
-        val user = userRepository.findById(profile.userId)
-            .orElseThrow { IllegalArgumentException("No user with id ${profile.userId}") }
+    fun save(profile: ProfileRequest) {
+        val userName = SecurityContextHolder.getContext().authentication.name
+        val userId = userRepository.findByUsername(userName)?.id
+            ?: throw IllegalArgumentException("User Not Found")
 
         require(profile.phoneNumber.length == 8 && profile.phoneNumber.all { it.isDigit() }) { "Phone number must be 8 digits" }
         require(profile.firstName.all { it.isLetter() }) { "First name must be letters" }
@@ -27,17 +28,31 @@ class ProfileService(
 
         // To avoid the wrong user from profile saving
         val tokenUsername = SecurityContextHolder.getContext().authentication.name
-        val requestUsername = userRepository.findById(profile.userId).get().username
+        val requestUsername = userRepository.findById(userId).get().username
         if (tokenUsername != requestUsername)
             throw ResponseStatusException(HttpStatus.FORBIDDEN, "Username mismatch")
-
-        profileRepository.save(profile)
+        val newProfile = ProfileEntity( userId = userId, firstName = profile.firstName, lastName = profile.lastName, phoneNumber = profile.phoneNumber)
+        profileRepository.save(newProfile)
     }
+
+    fun view() : ProfileResponse {
+        val userName = SecurityContextHolder.getContext().authentication.name
+        val userId = userRepository.findByUsername(userName)?.id
+            ?: throw IllegalArgumentException("User Not Found")
+        val profile = profileRepository.findByUserId(userId) ?: throw IllegalArgumentException("No profile with id $userId")
+       return ProfileResponse(profile.firstName, profile.lastName,profile.phoneNumber)
+    }
+
 
 }
 
 data class ProfileRequest(
-    val userId: Long,
+    val firstName: String,
+    val lastName: String,
+    val phoneNumber: String
+)
+
+data class ProfileResponse(
     val firstName: String,
     val lastName: String,
     val phoneNumber: String
