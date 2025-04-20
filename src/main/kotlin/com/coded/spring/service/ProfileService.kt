@@ -7,21 +7,22 @@ import org.springframework.http.HttpStatus
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Service
 import org.springframework.web.server.ResponseStatusException
-import java.lang.IllegalArgumentException
 
 
 @Service
-class ProfileService(private val profileRepository: ProfileRepository,
-                     private val userRepository: UserRepository,) {
-
+class ProfileService(
+    private val profileRepository: ProfileRepository,
+    private val userRepository: UserRepository,
+) {
 
 
     fun save(profile: ProfileEntity) {
-        val user = userRepository.findById(profile.userId).orElseThrow { IllegalArgumentException("No user with id ${profile.userId}") }
+        val user = userRepository.findById(profile.userId)
+            .orElseThrow { IllegalArgumentException("No user with id ${profile.userId}") }
 
-        require(profile.phoneNumber.length == 8 && profile.phoneNumber.all { it.isDigit() }) {"Phone number must be 8 digits" }
-        require(profile.firstName.all { it.isLetter() }) {"First name must be letters" }
-        require(profile.lastName.all { it.isLetter() }) {"Last name must be letters" }
+        require(profile.phoneNumber.length == 8 && profile.phoneNumber.all { it.isDigit() }) { "Phone number must be 8 digits" }
+        require(profile.firstName.all { it.isLetter() }) { "First name must be letters" }
+        require(profile.lastName.all { it.isLetter() }) { "Last name must be letters" }
 
 
         // To avoid the wrong user from profile saving
@@ -34,8 +35,10 @@ class ProfileService(private val profileRepository: ProfileRepository,
     }
 
 }
+
 data class ProfileRequest(
     val userId: Long,
     val firstName: String,
     val lastName: String,
-    val phoneNumber: String)
+    val phoneNumber: String
+)
