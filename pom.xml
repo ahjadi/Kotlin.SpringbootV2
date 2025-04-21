@@ -87,14 +87,15 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
-<!--		<dependency>-->
-<!--			<groupId>com.h2database</groupId>-->
-<!--			<artifactId>h2</artifactId>-->
-<!--			<scope>runtime</scope>-->
-<!--		</dependency>-->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>test</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
+			<scope>compile</scope>
 		</dependency>
 	</dependencies>
 
@@ -114,9 +115,8 @@
 						<arg>-Xjsr305=strict</arg>
 					</args>
 					<compilerPlugins>
-						<plugin>spring</plugin>
-<!--						put those two compiler plugins-->
 						<plugin>jpa</plugin>
+						<plugin>spring</plugin>
 						<plugin>all-open</plugin>
 						<plugin>no-arg</plugin>
 					</compilerPlugins>
@@ -129,10 +129,16 @@
 					</pluginOptions>
 				</configuration>
 				<dependencies>
+
+					<dependency>
+						<groupId>org.jetbrains.kotlin</groupId>
+						<artifactId>kotlin-maven-noarg</artifactId>
+						<version>1.9.25</version>
+					</dependency>
 					<dependency>
 						<groupId>org.jetbrains.kotlin</groupId>
 						<artifactId>kotlin-maven-allopen</artifactId>
-						<version>${kotlin.version}</version>
+						<version>1.9.25</version>
 					</dependency>
 				</dependencies>
 			</plugin>

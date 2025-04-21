@@ -51,7 +51,7 @@ class OrderService(
     }
 
 
-    data class ItemDTO(
+    data class ItemDto(
         val name: String,
         val quantity: Int,
         val price: BigDecimal
@@ -59,11 +59,11 @@ class OrderService(
 
     data class OrderRequest(
         val restaurant: String,
-        val items: MutableList<ItemDTO>
+        val items: MutableList<ItemDto>
     )
 
     data class OrderResponse(
         val restaurant: String,
-        val items: List<ItemDTO>
+        val items: List<ItemDto>
     )
 }

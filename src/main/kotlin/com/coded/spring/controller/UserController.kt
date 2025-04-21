@@ -20,14 +20,9 @@ class UserController(
 ) {
 
     @GetMapping("/hello")
-    fun hello() = """
-        <html>
-            <body>
-                <p style="color: #00008B;">hello yo</p>
-            </body>
-        </html>
-     
-    """.trimIndent()
+    fun hello(): String {
+        return "Hello World!"
+    }
 
     @PostMapping("/public/users/create")
     fun newUser(@RequestBody userRequest: UserRequest): Any {
