@@ -1,33 +1,70 @@
 package com.coded.spring.ordering
 
-import com.coded.spring.service.OrderService
+import com.coded.spring.authentication.jwt.JwtService
+import com.coded.spring.entity.UserEntity
+import com.coded.spring.repository.UserRepository
+import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate
+import org.springframework.http.HttpEntity
+import org.springframework.http.HttpHeaders
+import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
+import org.springframework.security.crypto.password.PasswordEncoder
+import org.springframework.test.context.ActiveProfiles
+import org.springframework.util.MultiValueMap
 import kotlin.test.assertEquals
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@ActiveProfiles("test")
 class ApplicationTests {
+//    MOCK TRIGGER ASSERT
+//    GIVEN WHEN THEN
+    companion object {
+        @JvmStatic
+//        @BeforeAll
+        fun setUp(
+            @Autowired userRepository: UserRepository,
+            @Autowired passwordEncoder: PasswordEncoder
+        ) {
 
-	@Autowired
-	lateinit var restTemplate: TestRestTemplate
+            userRepository.deleteAll()
 
-	@Test
-	fun testHelloWorld(){
-		val result = restTemplate.getForEntity("/hello", String::class.java)
-		val expected = "Hello World!"
+            val testUser =
+                UserEntity(
+                    name = "coded",
+                    email = "test@test.com",
+                    username = "coded",
+                    password = passwordEncoder.encode("Password123")
+                )
+            userRepository.save(testUser)
+        }
+    }
 
-		assertEquals(HttpStatus.OK, result.statusCode)
-		assertEquals(expected, result.body)
-	}
-		@Test
-	fun testSubmitOrder(){
+    // Tests go here
+    @Autowired
+    lateinit var restTemplate: TestRestTemplate
 
-		val result = restTemplate.postForEntity("/orders/v1/submit",  )
+    @Test
+    fun testHelloWorld(@Autowired jwtService: JwtService) {
+        val token = jwtService.generateToken("coded")
+        val headers = HttpHeaders(
+            MultiValueMap.fromSingleValue(mapOf("Authorization" to "Bearer $token"))
+        )
+        val requestEntity = HttpEntity<String>(headers)
 
-	}
-
-
+        val result = restTemplate.exchange(
+            "/hello",
+            HttpMethod.GET,
+            requestEntity,
+            String::class.java
+        )
+        assertEquals(HttpStatus.OK, result.statusCode)
+        assertEquals("Hello World!", result.body)
+    }
 }
+
+
+

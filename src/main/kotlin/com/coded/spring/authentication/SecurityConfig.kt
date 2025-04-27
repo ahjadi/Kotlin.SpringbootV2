@@ -30,11 +30,11 @@ class SecurityConfig(
         http.csrf { it.disable() }
             .authorizeHttpRequests {
                 it
-                    .anyRequest().permitAll()  // permit all
+//                    .anyRequest().permitAll()  // permit all
 
-//                    .requestMatchers("/auth/**", "/public/users/create").permitAll()
-//                    .anyRequest()
-//                    .authenticated()
+                    .requestMatchers("/auth/**", "/public/users/create").permitAll()
+                    .anyRequest()
+                    .authenticated()
             }
             .sessionManagement {
                 it.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
