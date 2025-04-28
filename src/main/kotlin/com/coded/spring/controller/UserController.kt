@@ -19,13 +19,18 @@ class UserController(
     private val userService: UserService,
     private val encoder: PasswordEncoder,
     private val profileService: ProfileService,
-    @Value("\${hello_world}")
-    private val fromEnvVarMessage: String
+    @Value("\${company_name}")
+    private val fromEnvVarMessage: String,
+    @Value("\${festive.feature}")
+    private val festiveFeature: Boolean
 ) {
 
     @GetMapping("/hello")
     fun hello(): String {
-        return fromEnvVarMessage
+        if(festiveFeature)
+            return "Eidkom Mubarak, Summer Sale is here!"
+        else
+            return "Welcome to Online Ordering by $fromEnvVarMessage"
     }
 
     @PostMapping("/public/users/create")
