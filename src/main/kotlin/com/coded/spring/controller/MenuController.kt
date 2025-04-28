@@ -15,9 +15,8 @@ class MenuController(val menuService: MenuService) {
 
     @PostMapping("/menu/add")
     fun addItemsToMenu(@RequestBody menuRequest: MenuRequest) : Any {
-        val menuEntity = MenuEntity(name = menuRequest.name, price = menuRequest.price)
-        menuService.addItems(menuEntity)
-        return ResponseEntity.ok().body("Menu items added successfully.")
+
+        return ResponseEntity.ok().body(menuService.addItems(menuRequest))
     }
 
     @GetMapping("/public/menu/list")

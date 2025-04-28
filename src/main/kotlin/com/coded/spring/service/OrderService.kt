@@ -5,6 +5,7 @@ import com.coded.spring.entity.OrderEntity
 import com.coded.spring.repository.ItemRepository
 import com.coded.spring.repository.OrderRepository
 import com.coded.spring.repository.UserRepository
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpStatus
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Service
@@ -15,7 +16,9 @@ import java.math.BigDecimal
 class OrderService(
     private var orderRepository: OrderRepository,
     private var itemRepository: ItemRepository,
-    private var userRepository: UserRepository
+    private var userRepository: UserRepository,
+    @Value("\${discount.feature}")
+    val discount: Boolean
 ) {
 
     fun createOrder(request: OrderRequest) {
@@ -33,16 +36,27 @@ class OrderService(
             userId = userId
         )
         val savedOrder = orderRepository.save(order)
-        val items = request.items.map {
-            ItemEntity(
-                name = it.name,
-                quantity = it.quantity,
-                price = it.price,
-                orderId = savedOrder.id!!
-            )
-        }
 
-        itemRepository.saveAll(items)
+            if (discount){
+                itemRepository.saveAll(request.items.map {
+                    ItemEntity(
+                        name = it.name,
+                        quantity = it.quantity,
+                        price = it.price.multiply(BigDecimal(0.8)),
+                        orderId = savedOrder.id!!
+                    )
+                })
+            }
+        else {
+                itemRepository.saveAll(request.items.map {
+                    ItemEntity(
+                        name = it.name,
+                        quantity = it.quantity,
+                        price = it.price,
+                        orderId = savedOrder.id!!
+                    )
+                })
+            }
     }
 
     fun listOrdersByUserID(userId: Long) {
