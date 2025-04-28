@@ -5,23 +5,27 @@ import com.coded.spring.service.ProfileRequest
 import com.coded.spring.service.ProfileService
 import com.coded.spring.service.UserRequest
 import com.coded.spring.service.UserService
+import io.swagger.v3.oas.annotations.tags.Tag
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.ResponseEntity
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
-
+@Tag(name = "CustomerAPI")
 @RestController
 class UserController(
     private val userService: UserService,
     private val encoder: PasswordEncoder,
-    private val profileService: ProfileService
+    private val profileService: ProfileService,
+    @Value("\${hello_world}")
+    private val fromEnvVarMessage: String
 ) {
 
     @GetMapping("/hello")
     fun hello(): String {
-        return "Hello World!"
+        return fromEnvVarMessage
     }
 
     @PostMapping("/public/users/create")

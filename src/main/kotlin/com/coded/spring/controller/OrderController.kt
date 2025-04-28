@@ -1,8 +1,9 @@
 package com.coded.spring.controller
 
 import com.coded.spring.service.OrderService
+import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.*
-
+@Tag(name = "OrderAPI")
 @RestController
 class OrderController(val orderService: OrderService) {
 

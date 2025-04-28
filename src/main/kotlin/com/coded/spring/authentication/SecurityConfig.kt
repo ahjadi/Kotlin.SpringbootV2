@@ -32,7 +32,7 @@ class SecurityConfig(
                 it
 //                    .anyRequest().permitAll()  // permit all
 
-                    .requestMatchers("/auth/**", "/public/users/create", "/api-docs").permitAll()
+                    .requestMatchers("/auth/**", "/public/users/create", "/api-docs", "/hello").permitAll()
                     .anyRequest()
                     .authenticated()
             }
