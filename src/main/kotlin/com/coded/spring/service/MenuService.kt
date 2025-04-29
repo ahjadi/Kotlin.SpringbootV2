@@ -20,21 +20,28 @@ class MenuService(
             price = menu.price))
     }
 
-    fun listMenuItems(): List<MenuEntity> {
+    fun listMenuItems(search: String?): List<MenuEntity> {
+
         val cachedMenu = menuCache["menu"]
+
         if (!cachedMenu.isNullOrEmpty())
         {
-            println()
-            println()
-            println("From cache")
-            println()
-            return cachedMenu
+            println("\nFrom cache\n")
 
+             if (search != null)
+                 return cachedMenu.filter { it.name.trim().lowercase().contains(search, true) }
+            else
+                return cachedMenu
         }
         val uncachedMenu = menuRepository.findAll()
         menuCache["menu"] = uncachedMenu
-        return uncachedMenu
+        if (search != null)
+            return uncachedMenu.filter { it.name.trim().lowercase().contains(search, true)  }
+        else
+            return uncachedMenu
     }
 
     val menuCache = serverCache.getMap< String,List<MenuEntity>>("menu")
 }
+
+
