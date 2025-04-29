@@ -3,6 +3,7 @@ package com.coded.spring.service
 import com.coded.spring.controller.MenuRequest
 import com.coded.spring.entity.MenuEntity
 import com.coded.spring.repository.MenuRepository
+import com.coded.spring.serverCache
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import java.math.BigDecimal
@@ -19,5 +20,21 @@ class MenuService(
             price = menu.price))
     }
 
-    fun listMenuItems() = menuRepository.findAll()
+    fun listMenuItems(): List<MenuEntity> {
+        val cachedMenu = menuCache["menu"]
+        if (!cachedMenu.isNullOrEmpty())
+        {
+            println()
+            println()
+            println("From cache")
+            println()
+            return cachedMenu
+
+        }
+        val uncachedMenu = menuRepository.findAll()
+        menuCache["menu"] = uncachedMenu
+        return uncachedMenu
+    }
+
+    val menuCache = serverCache.getMap< String,List<MenuEntity>>("menu")
 }

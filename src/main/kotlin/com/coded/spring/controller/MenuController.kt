@@ -13,7 +13,7 @@ import java.math.BigDecimal
 @RestController
 class MenuController(val menuService: MenuService) {
 
-    @PostMapping("/menu/add")
+    @PostMapping("/auth/menu/add")
     fun addItemsToMenu(@RequestBody menuRequest: MenuRequest) : Any {
 
         return ResponseEntity.ok().body(menuService.addItems(menuRequest))
