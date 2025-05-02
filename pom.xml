@@ -9,8 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.coded.spring</groupId>
-	<artifactId>Ordering</artifactId>
+	<artifactId>monolith</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
 	<name>Kotlin.SpringbootV2</name>
 	<description>Kotlin.SpringbootV2</description>
 	<url/>
@@ -20,6 +21,10 @@
 	<developers>
 		<developer/>
 	</developers>
+	<modules>
+		<module>authentication</module>
+		<module>order</module>
+	</modules>
 	<scm>
 		<connection/>
 		<developerConnection/>
